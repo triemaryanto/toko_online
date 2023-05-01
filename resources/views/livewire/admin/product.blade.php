@@ -81,9 +81,17 @@
                                 @endforeach
                                 @else
                                 @endif
-                                @if ($path)
-                                @foreach ($path as $path)
-                                <img src="{{ route('helper.show-picture', ['path' => $path]) }}" width="200" height="200" class="img-fluid mx-auto d-block float-left m-2">
+                                @if ($productImages)
+                                @foreach ($productImages as $path)
+                                <div class="img-fluid mx-auto d-block float-left m-2">
+                                    @if(session()->has('deleteImage'))
+                                    <div class="alert alert-success text-center">{{ session('deleteImage') }}</div>
+                                    @endif
+                                    <img src="{{ route('helper.show-picture', ['path' => $path->image]) }}" width="100" height="100">
+                                    <button type="button" class="btn btn-tool" wire:click.prevent="deleteImage({{$path->id}})">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
                                 @endforeach
                                 @else
                                 @endif

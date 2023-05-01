@@ -2,14 +2,17 @@
 
 namespace App\Http\Livewire\Admin;
 
+use App\Models\Image;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
 use App\Models\Product;
+use Illuminate\Database\Eloquent\Builder;
 
 class ProductTable extends DataTableComponent
 {
     public $no;
     protected $model = Product::class;
+
 
     public function configure(): void
     {
@@ -29,19 +32,10 @@ class ProductTable extends DataTableComponent
                 ->sortable()->searchable(),
             Column::make("Price", "price")
                 ->sortable(),
-            Column::make("Stock", "stock")
-                ->sortable(),
+            Column::make('Gambar', 'unique_id')
+                ->view('component.action-view'),
             Column::make("Deskripsi", "deskripsi")
                 ->sortable(),
-            Column::make('Image', 'image')->format(
-                function ($value, $row, Column $column) {
-                    if ($row->image == 0) {
-                        return 'none';
-                    } else {
-                        return '<img src="' . route("helper.show-picture", ["path" => $row->image]) . '" width="100px>"';
-                    }
-                }
-            )->html(),
             Column::make('Action', 'id')
                 ->view('component.table-action')
         ];

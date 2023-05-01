@@ -58,9 +58,9 @@
                             <label>Gambar</label>
                             <div class="input-group">
                                 <div class="custom-file">
-                                    <input type="file" class="custom-file-input" accept="image/png, image/gif, image/jpeg" wire:model.lazy="image">
+                                    <input type="file" class="custom-file-input" accept="image/png, image/gif, image/jpeg" wire:model.lazy="images" multiple>
                                     <label class="custom-file-label">Choose file</label>
-                                    @error('image')
+                                    @error('images')
                                     <span class="form-text text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
@@ -69,14 +69,22 @@
                                 </div>
                             </div>
                             <div class="input-group">
-                                <div wire:loading wire:target="image">Uploading...</div>
-                                @if ($image)
-                                <img src="{{ $image->temporaryUrl() }}" width="200" class="img-fluid mx-auto d-block float-left m-2">
+                                <div wire:loading wire:target="images">Uploading...</div>
+                                @if ($images)
+                                @foreach ($images as $images)
+                                <img src="{{ $images->temporaryUrl() }}" width="100" class="img-fluid d-block float-left m-2">
+                                <div wire:key="{{$loop->index}}">
+                                    <button type="button" class="btn btn-tool" wire:click="removeMe({{$loop->index}})">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                                @endforeach
                                 @else
-
                                 @endif
                                 @if ($path)
+                                @foreach ($path as $path)
                                 <img src="{{ route('helper.show-picture', ['path' => $path]) }}" width="200" height="200" class="img-fluid mx-auto d-block float-left m-2">
+                                @endforeach
                                 @else
                                 @endif
                             </div>
@@ -102,10 +110,11 @@
                 <!-- /.col -->
             </div>
             <!-- /.row -->
+            <div class="card-body">
+                <livewire:admin.product-table />
+            </div>
         </div>
-        <div class="card-body">
-            <livewire:admin.product-table />
-        </div>
+        <livewire:admin.global.konfirmasi-hapus />
         <!-- /.card-body -->
     </div>
 </div>

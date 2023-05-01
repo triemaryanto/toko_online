@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\Admin\Dashboard;
 use App\Http\Controllers\HelperController;
+use App\Http\Livewire\Admin\Images;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,4 +33,5 @@ Route::middleware(['role:admin'])->group(function () {
     Route::get('show-picture}', [HelperController::class, 'showPicture'])->name('helper.show-picture');
     Route::get('dashboard', Dashboard::class)->name('dashboard');
     Route::get('product', Product::class)->name('product');
+    Route::get('images', Images::class)->name('images');
 });

@@ -9,11 +9,11 @@ class Product extends Model
 {
     use HasFactory;
     protected $fillable = [
+        'unique_id',
         'name',
         'price',
         'stock',
         'deskripsi',
-        'image',
     ];
 
     public function orders()
@@ -23,5 +23,9 @@ class Product extends Model
     public function carts()
     {
         return $this->hasMany(Cart::class);
+    }
+    public function images()
+    {
+        return $this->hasMany(Image::class, 'unique_id', 'product_unique_id');
     }
 }
